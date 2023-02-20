@@ -467,6 +467,9 @@ bool SpatioTemporalVoxelLayer::GetMarkingObservations(
   bool current = true;
 
   for (unsigned int i = 0; i != _marking_buffers.size(); ++i) {
+    if (!_marking_buffers[i]->IsEnabled()) {
+      continue;
+    }
     _marking_buffers[i]->Lock();
     _marking_buffers[i]->GetReadings(marking_observations);
     current = _marking_buffers[i]->UpdatedAtExpectedRate();
@@ -486,6 +489,9 @@ bool SpatioTemporalVoxelLayer::GetClearingObservations(
   // get clearing observations
   bool current = true;
   for (unsigned int i = 0; i != _clearing_buffers.size(); ++i) {
+    if (!_clearing_buffers[i]->IsEnabled()) {
+      continue;
+    }
     _clearing_buffers[i]->Lock();
     _clearing_buffers[i]->GetReadings(clearing_observations);
     current = _clearing_buffers[i]->UpdatedAtExpectedRate();
